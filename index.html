@@ -184,7 +184,6 @@
     
     <!-- ШАГ 1: ВЫБОР СЛОВАРЯ -->
     <div id="dict-menu-screen">
-        <p class="block-info">Выберите набор для изучения:</p>
         <div class="menu-list">
             <div class="flex-row">
                 <button class="btn-aesthetic accent-hard" id="btn-dict-hard" style="flex-grow: 1;">🔥 Трудные слова (0)</button>
@@ -198,6 +197,9 @@
             
             <p class="block-info" style="margin: 10px 0 0 0; text-align: left; padding-left: 10px;">Юнит 2:</p>
             <button class="btn-aesthetic accent-unit2" id="btn-dict-unit2">2.1 Большой словарь (74 шт)</button>
+            
+            <p class="block-info" style="margin: 10px 0 0 0; text-align: left; padding-left: 10px;">Для зачета (ПУКН):</p>
+            <button class="btn-aesthetic accent-test" id="btn-dict-100words">💯 100 слов ПУКН (100 шт)</button>
         </div>
     </div>
 
@@ -318,28 +320,6 @@
         <div class="flex-row">
             <button class="btn-secondary" id="btn-back-test" style="flex: 1;">🔙 Выйти</button>
             <button class="btn-secondary" id="btn-home-test" style="flex: 1;">🏠 На главную</button>
-        </div>
-    </div>
-
-    <!-- ИТОГОВЫЙ ЭКРАН СТАТИСТИКИ -->
-    <div id="stats-screen" class="hidden" style="width: 100%;">
-        <div class="stat-title" id="stats-title-msg">Вы усердный ученик!<br>Продолжайте осваивать сложные термины.</div>
-        <p class="block-info" style="text-align: left; margin-top: 20px; margin-bottom: 5px;">Ваш прогресс</p>
-        
-        <div class="stats-container">
-            <div class="donut-wrapper" id="stats-donut">
-                <div class="donut-inner" id="stats-percent">100%</div>
-            </div>
-            <div class="stats-bars">
-                <div class="stat-bar bar-green"><span>Знаю</span> <span id="stats-known">0</span></div>
-                <div class="stat-bar bar-orange"><span>Ошибок</span> <span id="stats-learning">0</span></div>
-                <div class="stat-bar bar-gray"><span>Всего</span> <span id="stats-remaining">0</span></div>
-            </div>
-        </div>
-
-        <div class="menu-list" style="margin-top: 20px;">
-            <button class="btn-aesthetic accent-big" id="btn-stats-restart">🔄 Начать заново</button>
-            <button class="btn-secondary" id="btn-stats-menu">🏠 Главное меню</button>
         </div>
     </div>
 
@@ -545,6 +525,110 @@
             { en: "shared vision", ru: "общее/единое видение; общая концепция" }
         ];
 
+        // --- ДАННЫЕ СЛОВАРЕЙ: 100 СЛОВ ПУКН ---
+        const dict100Words = [
+            { en: "accelerate", ru: "ускорять", tr: "[əkˈseləreɪt]" },
+            { en: "accomplish", ru: "выполнять, достигать", tr: "[əˈkʌmplɪʃ]" },
+            { en: "accomplishment", ru: "достижение, выполнение", tr: "[əˈkʌmplɪʃmənt]" },
+            { en: "accountability", ru: "подотчетность; ответственность", tr: "[əˌkaʊntəˈbɪlɪti]" },
+            { en: "activities", ru: "действия, деятельность", tr: "[ækˈtɪvətiz]" },
+            { en: "align (with)", ru: "выравнивать(ся), приводить в соответствие", tr: "[əˈlaɪn]" },
+            { en: "alignment", ru: "группировка; увязка, слаженность", tr: "[əˈlaɪnmənt]" },
+            { en: "alleviate", ru: "облегчать; смягчать", tr: "[əˈliːvieɪt]" },
+            { en: "approach", ru: "подход, метод", tr: "[əˈprəʊtʃ]" },
+            { en: "assess", ru: "оценивать; определять", tr: "[əˈses]" },
+            { en: "attain objectives/goals", ru: "достигать целей", tr: "[əˈteɪn]" },
+            { en: "authority", ru: "власть; полномочие", tr: "[ɔːˈθɒrɪti]" },
+            { en: "authorize", ru: "уполномочивать; разрешать", tr: "[ˈɔːθəraɪz]" },
+            { en: "avoid", ru: "избегать; уклоняться", tr: "[əˈvɔɪd]" },
+            { en: "aware", ru: "знающий, осведомлённый", tr: "[əˈweə]" },
+            { en: "awareness", ru: "информированность, осведомленность", tr: "[əˈweənəs]" },
+            { en: "benchmark", ru: "критерий; стандарт, ориентир", tr: "[ˈbentʃmɑːk]" },
+            { en: "chain of command", ru: "цепь инстанций, порядок субординации", tr: "[tʃeɪn əv kəˈmɑːnd]" },
+            { en: "coherent", ru: "последовательный, связный, логичный", tr: "[kəʊˈhɪərənt]" },
+            { en: "commit", ru: "совершать; обязывать; вверять", tr: "[kəˈmɪt]" },
+            { en: "commitment", ru: "обязательство; приверженность", tr: "[kəˈmɪtmənt]" },
+            { en: "communicate", ru: "общаться; сообщать", tr: "[kəˈmjuːnɪkeɪt]" },
+            { en: "communicator", ru: "собеседник, коммуникатор", tr: "[kəˈmjuːnɪkeɪtə]" },
+            { en: "company’s performance", ru: "результативность деятельности фирмы", tr: "[pəˈfɔːməns]" },
+            { en: "competence", ru: "компетентность, способность", tr: "[ˈkɒmpɪtəns]" },
+            { en: "competition", ru: "конкуренция, соревнование", tr: "[ˌkɒmpəˈtɪʃn]" },
+            { en: "complex", ru: "сложный, комплексный", tr: "[ˈkɒmpleks]" },
+            { en: "compliance risk", ru: "риск нормативно-правового несоответствия", tr: "[kəmˈplaɪəns rɪsk]" },
+            { en: "consistency", ru: "системность, последовательность", tr: "[kənˈsɪstənsi]" },
+            { en: "consistent", ru: "последовательный; согласующийся", tr: "[kənˈsɪstənt]" },
+            { en: "contingency", ru: "непредвиденное обстоятельство", tr: "[kənˈtɪndʒənsi]" },
+            { en: "controller", ru: "контролер, управляющий", tr: "[kənˈtrəʊlə]" },
+            { en: "corporate disclosure", ru: "раскрытие корпоративной информации", tr: "[ˈkɔːpərət dɪsˈkləʊʒə]" },
+            { en: "crisis management", ru: "антикризисное управление", tr: "[ˈkraɪsɪs ˈmænɪdʒmənt]" },
+            { en: "delegate", ru: "делегировать полномочия, поручать", tr: "[ˈdelɪɡeɪt]" },
+            { en: "delegation", ru: "делегирование; передача полномочий", tr: "[ˌdelɪˈɡeɪʃn]" },
+            { en: "departmentalize", ru: "разбивать на отделы", tr: "[ˌdiːpɑːtˈmentəlaɪz]" },
+            { en: "deviate (from)", ru: "отклоняться", tr: "[ˈdiːvieɪt]" },
+            { en: "direct", ru: "направлять, руководить", tr: "[dəˈrekt]" },
+            { en: "disturbance handler", ru: "наладчик по беспорядкам", tr: "[dɪˈstɜːbəns ˈhændlə]" },
+            { en: "division", ru: "подразделение", tr: "[dɪˈvɪʒn]" },
+            { en: "downsize", ru: "сокращать штат, уменьшать размеры", tr: "[ˈdaʊnsaɪz]" },
+            { en: "dynamic", ru: "динамичный, динамика", tr: "[daɪˈnæmɪk]" },
+            { en: "ensure", ru: "обеспечивать; гарантировать", tr: "[ɪnˈʃʊə]" },
+            { en: "environment", ru: "внешняя среда; окружающая обстановка", tr: "[ɪnˈvaɪrənmənt]" },
+            { en: "evaluate", ru: "оценивать; вычислять", tr: "[ɪˈvæljueɪt]" },
+            { en: "evaluation", ru: "оценка, оценивание, аттестация", tr: "[ɪˌvæljuˈeɪʃn]" },
+            { en: "expose", ru: "подвергать; обнажать; разоблачать", tr: "[ɪkˈspəʊz]" },
+            { en: "exposure", ru: "риск; подвергание риску", tr: "[ɪkˈspəʊʒə]" },
+            { en: "facilitate", ru: "облегчать, содействовать", tr: "[fəˈsɪlɪteɪt]" },
+            { en: "facilitator", ru: "помощник, фасилитатор", tr: "[fəˈsɪlɪteɪtə]" },
+            { en: "guideline", ru: "ориентир; директива; установка", tr: "[ˈɡaɪdlaɪn]" },
+            { en: "horizontal relationships", ru: "горизонтальные связи/отношения", tr: "[ˌhɒrɪˈzɒntl rɪˈleɪʃnʃɪps]" },
+            { en: "implement", ru: "реализовать; осуществлять", tr: "[ˈɪmplɪmənt]" },
+            { en: "incentive", ru: "стимул", tr: "[ɪnˈsentɪv]" },
+            { en: "interconnection", ru: "взаимосвязь", tr: "[ˌɪntəkəˈnekʃn]" },
+            { en: "interpersonal skills", ru: "навыки межличностного общения", tr: "[ˌɪntəˈpɜːsənl skɪlz]" },
+            { en: "job description", ru: "должностные обязанности", tr: "[dʒɒb dɪˈskrɪpʃn]" },
+            { en: "job enlargement", ru: "расширение обязанностей", tr: "[dʒɒb ɪnˈlɑːdʒmənt]" },
+            { en: "job rotation", ru: "ротация должностей", tr: "[dʒɒb rəʊˈteɪʃn]" },
+            { en: "line and staff organization", ru: "линейно-функциональная организация", tr: "[laɪn ənd stɑːf]" },
+            { en: "manage", ru: "управлять; руководить", tr: "[ˈmænɪdʒ]" },
+            { en: "managerial", ru: "управленческий", tr: "[ˌmænəˈdʒɪəriəl]" },
+            { en: "manpower", ru: "личный состав, кадры", tr: "[ˈmænpaʊə]" },
+            { en: "matrix organization", ru: "матричная организация", tr: "[ˈmeɪtrɪks]" },
+            { en: "middle management", ru: "руководство среднего звена", tr: "[ˈmɪdl ˈmænɪdʒmənt]" },
+            { en: "milestone", ru: "веха; этап; запланированный показатель", tr: "[ˈmaɪlstəʊn]" },
+            { en: "mindset", ru: "образ мышления, менталитет", tr: "[ˈmaɪndset]" },
+            { en: "mitigate", ru: "смягчать; уменьшать", tr: "[ˈmɪtɪɡeɪt]" },
+            { en: "mitigation", ru: "смягчение; уменьшение", tr: "[ˌmɪtɪˈɡeɪʃn]" },
+            { en: "monetary incentives", ru: "денежные стимулы", tr: "[ˈmʌnɪtri ɪnˈsentɪvz]" },
+            { en: "neglect", ru: "пренебрегать, игнорировать", tr: "[nɪˈɡlekt]" },
+            { en: "organization chart", ru: "организационная структура/схема", tr: "[ˌɔːɡənaɪˈzeɪʃn tʃɑːt]" },
+            { en: "outcome", ru: "результат; итог; исход", tr: "[ˈaʊtkʌm]" },
+            { en: "outline", ru: "схема; план / намечать; обрисовывать", tr: "[ˈaʊtlaɪn]" },
+            { en: "performance", ru: "выполнение; результативность", tr: "[pəˈfɔːməns]" },
+            { en: "peripheral activities", ru: "второстепенная деятельность", tr: "[pəˈrɪfərəl]" },
+            { en: "permeate", ru: "распространять, охватывать, проникать", tr: "[ˈpɜːmieɪt]" },
+            { en: "personnel", ru: "штат, кадры, личный состав", tr: "[ˌpɜːsəˈnel]" },
+            { en: "policies and procedures", ru: "принципы и порядок", tr: "[ˈpɒləsiz ənd prəˈsiːdʒəz]" },
+            { en: "research", ru: "исследование, изучать", tr: "[rɪˈsɜːtʃ]" },
+            { en: "regulate", ru: "регулировать; регламентировать", tr: "[ˈreɡjuleɪt]" },
+            { en: "regulator", ru: "регулятор; регламентирующий орган", tr: "[ˈreɡjuleɪtə]" },
+            { en: "regulation", ru: "положение, предписание", tr: "[ˌreɡjuˈleɪʃn]" },
+            { en: "regulatory", ru: "регулирующий; распорядительный", tr: "[ˈreɡjələtəri]" },
+            { en: "schedule", ru: "расписание, график", tr: "[ˈʃedjuːl]" },
+            { en: "senior management", ru: "высшее руководство", tr: "[ˈsiːniə ˈmænɪdʒmənt]" },
+            { en: "shared vision", ru: "общее/единое видение", tr: "[ʃeəd ˈvɪʒn]" },
+            { en: "skill", ru: "искусство, мастерство, навык", tr: "[skɪl]" },
+            { en: "staff", ru: "штат, кадры", tr: "[stɑːf]" },
+            { en: "strategic business unit (SBU)", ru: "стратегическая бизнес-единица", tr: "[strəˈtiːdʒɪk]" },
+            { en: "strategic management", ru: "стратегическое управление", tr: "[strəˈtiːdʒɪk ˈmænɪdʒmənt]" },
+            { en: "strategy", ru: "стратегия; линия поведения", tr: "[ˈstrætədʒi]" },
+            { en: "subordinate", ru: "подчиненный", tr: "[səˈbɔːdɪnɪt]" },
+            { en: "supervisory management", ru: "группа менеджеров / оперативное руководство", tr: "[ˌsuːpəˈvaɪzəri]" },
+            { en: "SWOT analysis", ru: "СВОТ анализ", tr: "[swɒt]" },
+            { en: "tax avoidance", ru: "уклонение от уплаты налога (законными средствами)", tr: "[tæks əˈvɔɪdəns]" },
+            { en: "techniques", ru: "методы, приемы", tr: "[tekˈniːks]" },
+            { en: "train staff", ru: "обучать персонал", tr: "[treɪn stɑːf]" },
+            { en: "unify", ru: "объединять", tr: "[ˈjuːnɪfaɪ]" }
+        ];
+
         // --- ЛОКАЛЬНОЕ СОХРАНЕНИЕ ТРУДНЫХ СЛОВ ---
         let hardWordsList = JSON.parse(localStorage.getItem('hardWords')) || [];
         function updateHardWordsBtn() {
@@ -616,6 +700,8 @@
         document.getElementById('btn-dict-phrases').addEventListener('click', () => openPreview(dictPhrases, 'phrases1', '1.2.2 Словосочетания'));
         
         document.getElementById('btn-dict-unit2').addEventListener('click', () => openPreview(dictUnit2, 'unit2', '2.1 Юнит 2 (Большой)'));
+        
+        document.getElementById('btn-dict-100words').addEventListener('click', () => openPreview(dict100Words, '100words', '100 слов ПУКН'));
 
         function openPreview(dict, id, name) {
             currentDictionary = dict; activeDictName = id;
